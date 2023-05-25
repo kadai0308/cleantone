@@ -1,7 +1,7 @@
 # cleantone
 
-<img width="516" alt="image" src="https://github.com/kadai0308/cleantone/assets/24975318/c1b1168a-7164-44b8-9ac9-c33bbb7310c2">
-
+<img width="408" alt="image" src="https://github.com/kadai0308/cleantone/assets/24975318/44725331-7b8e-4b6f-9c0a-28b735b3f4b9">
+<br/>
 <img width="590" alt="Screen Shot 2023-05-25 at 8 35 35 PM" src="https://github.com/kadai0308/cleantone/assets/24975318/29bb7042-5511-4fb4-a607-48932cb318ca">
 <br/>
 <br/>
