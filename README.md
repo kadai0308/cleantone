@@ -15,6 +15,10 @@ clonetone, which is made with Golang, offers a user-friendly and easy-to-configu
 
 ## Performance Report
 
+<img width="601" alt="image" src="https://github.com/kadai0308/cleantone/assets/24975318/545335b5-c359-4479-9278-4d8bc0925dc4">
+
+Read will be the same because both are from memory (use map to do index)
+
 ## Getting started
 
 ### Installation
