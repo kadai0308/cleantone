@@ -13,6 +13,14 @@ clonetone, which is made with Golang, offers a user-friendly and easy-to-configu
 - It is easily configurable, allowing users to adjust the size of each data file and the frequency of pruning.
 - It supports several data persistence formats, including CSV, JSON(WIP), and Protobuf(WIP).
 
-### License
+## Performance Report
+
+## Getting started
+
+### Installation
+
+### Example
+
+## License
 
 cleantone is under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
