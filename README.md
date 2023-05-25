@@ -14,7 +14,7 @@ clonetone, which is made with Golang, offers a user-friendly and easy-to-configu
 - It incorporates an append log-based persistence system to ensure fast write operations.
 - It automatically prunes data files to minimize disk usage.
 - It is easily configurable, allowing users to adjust the size of each data file and the frequency of pruning.
-- It supports several data persistence formats, including CSV, JSON, and Protobuf.
+- It supports several data persistence formats, including CSV, JSON(WIP), and Protobuf(WIP).
 
 ### License
 
