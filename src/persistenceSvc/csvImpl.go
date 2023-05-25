@@ -3,6 +3,7 @@ package persistenceSvc
 import (
 	"bufio"
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -14,6 +15,7 @@ import (
 type CsvImpl struct {
 	BaseImpl
 	Writer *bufio.Writer
+	//StringBuilder strings.Builder
 }
 
 func NewCsvImpl(format DataFormat, dataPath string, rotateThreshold int) (*CsvImpl, error) {
@@ -27,7 +29,7 @@ func NewCsvImpl(format DataFormat, dataPath string, rotateThreshold int) (*CsvIm
 		return nil, err
 	}
 
-	write := bufio.NewWriterSize(file, rotateThreshold)
+	write := bufio.NewWriterSize(file, 2*rotateThreshold)
 	return &CsvImpl{
 		BaseImpl{
 			File:            file,
@@ -41,13 +43,21 @@ func NewCsvImpl(format DataFormat, dataPath string, rotateThreshold int) (*CsvIm
 	}, nil
 }
 
+func (c *CsvImpl) GenerateCsvRow(key string, value string) string {
+	StringBuilder := strings.Builder{}
+	StringBuilder.WriteString(key)
+	StringBuilder.WriteString(",")
+	StringBuilder.WriteString(value)
+	StringBuilder.WriteString("\n")
+	return StringBuilder.String()
+}
+
 func (c *CsvImpl) WriteData(key string, value string) error {
-	data := fmt.Sprintf("%s,%s\n", key, value)
+	data := c.GenerateCsvRow(key, value)
 	c.Writer.WriteString(data)
 	c.FileSize = c.FileSize + int64(len(data))
 	err := c.RotateFile()
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
 	return nil
@@ -68,7 +78,7 @@ func (c *CsvImpl) BuildIndex() (map[string]string, error) {
 		reader.Comma = ','
 		records, err := reader.ReadAll()
 		if err != nil {
-			return nil, err
+			return nil, errors.New(fmt.Sprintf("reading %s err: %s", fileInfo.Name(), err.Error()))
 		}
 
 		for _, record := range records {
@@ -79,7 +89,7 @@ func (c *CsvImpl) BuildIndex() (map[string]string, error) {
 }
 
 func (c *CsvImpl) RotateFile() error {
-	if c.FileSize > int64(c.RotateThreshold) {
+	if c.FileSize >= int64(c.RotateThreshold) {
 		err := c.Writer.Flush()
 		if err != nil {
 			return err
@@ -93,7 +103,7 @@ func (c *CsvImpl) RotateFile() error {
 		}
 		c.File.Close()
 		c.File = file
-		c.Writer = bufio.NewWriter(file)
+		c.Writer = bufio.NewWriterSize(file, 2*c.RotateThreshold)
 		c.FileSize = 0
 	}
 	return nil

@@ -29,13 +29,14 @@ func NewDB(config DBConfig) *DB {
 }
 
 func (db *DB) Persist(key string, value string) error {
-	db.PersistenceSvc.WriteData(key, value)
-	return nil
+	return db.PersistenceSvc.WriteData(key, value)
 }
 
 func (db *DB) Set(key string, value string) {
 	db.Index[key] = value
-	db.Persist(key, value)
+	if err := db.Persist(key, value); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (db *DB) Get(key string) (string, error) {

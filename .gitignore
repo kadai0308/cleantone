@@ -1,2 +1,4 @@
 data/*
 .idea*
+main_test.go
+main.go
