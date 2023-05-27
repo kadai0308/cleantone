@@ -2,7 +2,7 @@ package cleantone
 
 import (
 	"fmt"
-	"github.com/kadai0308/cleantone/persistenceSvc"
+	"github.com/kadai0308/cleantone/PersistenceSvc"
 	"math/rand"
 	"os"
 	"testing"
@@ -10,9 +10,9 @@ import (
 )
 
 var config = DBConfig{
-	DataFormat:      persistenceSvc.CSV,
+	DataFormat:      PersistenceSvc.DataFormat.CSV,
 	DataPath:        "/Users/davy/davy/go_playground/kv_db/data",
-	RotateThreshold: 100 * MB,
+	RotateThreshold: 100 * FileSize.MB,
 }
 
 var TestDB = NewDB(config)
@@ -50,8 +50,8 @@ func BenchmarkWriteCSV(b *testing.B) {
 	}
 }
 
-func main() {
-
-	testing.Benchmark(BenchmarkSetSingleKey)
-
-}
+//func main() {
+//
+//	testing.Benchmark(BenchmarkSetSingleKey)
+//
+//}

@@ -1,4 +1,4 @@
-package persistenceSvc
+package PersistenceSvc
 
 import (
 	"errors"
@@ -19,15 +19,15 @@ type PersistenceSvc interface {
 	Close() error
 }
 
-func NewPersistenceSvc(format DataFormat, dataPath string, rotateThreshold int) (PersistenceSvc, error) {
-	if format == CSV {
+func NewPersistenceSvc(format DataFormatImpl, dataPath string, rotateThreshold int) (PersistenceSvc, error) {
+	if format == DataFormat.CSV {
 		impl, err := NewCsvImpl(format, dataPath, rotateThreshold)
 		if err != nil {
 			return nil, err
 		}
 
 		return impl, err
-	} else if format == JSON {
+	} else if format == DataFormat.JSON {
 
 	}
 	errMsg := fmt.Sprintf("Format %s not supported", format)
@@ -39,7 +39,7 @@ type BaseImpl struct {
 	FileID          int
 	FileSize        int64
 	DataPath        string
-	Format          DataFormat
+	Format          DataFormatImpl
 	RotateThreshold int
 }
 

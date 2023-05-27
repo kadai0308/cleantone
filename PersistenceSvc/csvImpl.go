@@ -1,4 +1,4 @@
-package persistenceSvc
+package PersistenceSvc
 
 import (
 	"bufio"
@@ -17,7 +17,7 @@ type CsvImpl struct {
 	Writer *bufio.Writer
 }
 
-func NewCsvImpl(format DataFormat, dataPath string, rotateThreshold int) (*CsvImpl, error) {
+func NewCsvImpl(format DataFormatImpl, dataPath string, rotateThreshold int) (*CsvImpl, error) {
 	file, fileID, err := InitDataFile(dataPath, string(format))
 	if err != nil {
 		return nil, err
@@ -131,7 +131,7 @@ func (c *CsvImpl) Prune(index map[string]string) error {
 
 	newDataPath := filepath.Join(c.DataPath, "new_data")
 	os.Mkdir(newDataPath, 0755)
-	csvPersistSvc, err := NewCsvImpl(CSV, newDataPath, c.RotateThreshold)
+	csvPersistSvc, err := NewCsvImpl(DataFormat.CSV, newDataPath, c.RotateThreshold)
 	if err != nil {
 		return err
 	}

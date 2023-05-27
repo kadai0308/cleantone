@@ -2,7 +2,7 @@ package cleantone
 
 import (
 	"fmt"
-	"github.com/kadai0308/cleantone/persistenceSvc"
+	"github.com/kadai0308/cleantone/PersistenceSvc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"io/ioutil"
@@ -29,7 +29,7 @@ type DBTestSuite struct {
 //dbConfig := DBConfig{
 //	RotateThreshold: 1 * KB,
 //	DataPath:        dataPath,
-//	DataFormat:      persistenceSvc.CSV,
+//	DataFormat:      PersistenceSvc.CSV,
 //}
 //suite.DBConfig = &dbConfig
 //suite.DBSvc = NewDB(dbConfig)
@@ -51,9 +51,9 @@ func (suite *DBTestSuite) BeforeTest(_, _ string) {
 	}
 
 	dbConfig := DBConfig{
-		RotateThreshold: 1 * KB,
+		RotateThreshold: 1 * FileSize.KB,
 		DataPath:        dataPath,
-		DataFormat:      persistenceSvc.CSV,
+		DataFormat:      PersistenceSvc.DataFormat.CSV,
 	}
 	suite.DBConfig = &dbConfig
 	suite.DBSvc = NewDB(dbConfig)
@@ -90,7 +90,7 @@ func (suite *DBTestSuite) TestDBRead() {
 func (suite *DBTestSuite) TestDBPersistence() {
 	totalDataSize := 0
 	key := "a"
-	for i := 0; i < 1*KB; i++ {
+	for i := 0; i < 1*FileSize.KB; i++ {
 		value := strconv.FormatInt(int64(i), 10)
 		suite.DBSvc.Set(key, value)
 
@@ -105,7 +105,7 @@ func (suite *DBTestSuite) TestDBPersistence() {
 func (suite *DBTestSuite) TestDBInitBuildIndex() {
 	key := "a"
 	value := "666"
-	for i := 0; i < KB; i++ {
+	for i := 0; i < FileSize.KB; i++ {
 		suite.DBSvc.Set(key, value)
 	}
 	newValue := "76786838"
