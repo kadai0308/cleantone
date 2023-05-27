@@ -1,22 +1,21 @@
-package main
+package cleantone
 
 import (
 	"fmt"
-	"github.com/kadai0308/cleantone/src"
-	"github.com/kadai0308/cleantone/src/persistenceSvc"
+	"github.com/kadai0308/cleantone/persistenceSvc"
 	"math/rand"
 	"os"
 	"testing"
 	"time"
 )
 
-var config = src.DBConfig{
+var config = DBConfig{
 	DataFormat:      persistenceSvc.CSV,
 	DataPath:        "/Users/davy/davy/go_playground/kv_db/data",
-	RotateThreshold: 100 * src.MB,
+	RotateThreshold: 100 * MB,
 }
 
-var DB = src.NewDB(config)
+var TestDB = NewDB(config)
 
 var INDEX = map[string]string{}
 var CsvFile, _ = os.OpenFile("./test.csv", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
@@ -29,7 +28,7 @@ func BenchmarkSetSingleKey(b *testing.B) {
 	rand.Seed(time.Now().UnixNano())
 
 	for j := 0; j < b.N; j++ {
-		DB.Set(KEY, VALUE)
+		TestDB.Set(KEY, VALUE)
 	}
 
 }
@@ -39,7 +38,7 @@ func BenchmarkReadKey(b *testing.B) {
 	rand.Seed(time.Now().UnixNano())
 
 	for j := 0; j < b.N; j++ {
-		DB.Get("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+		TestDB.Get("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 	}
 }
 

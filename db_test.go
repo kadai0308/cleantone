@@ -1,8 +1,8 @@
-package src
+package cleantone
 
 import (
 	"fmt"
-	"github.com/kadai0308/cleantone/src/persistenceSvc"
+	"github.com/kadai0308/cleantone/persistenceSvc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"io/ioutil"

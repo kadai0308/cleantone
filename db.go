@@ -1,9 +1,9 @@
-package src
+package cleantone
 
 import (
 	"errors"
 	"fmt"
-	"github.com/kadai0308/cleantone/src/persistenceSvc"
+	"github.com/kadai0308/cleantone/persistenceSvc"
 	"log"
 )
 

@@ -1,4 +1,4 @@
-package src
+package cleantone
 
 type DataFormat string
 
