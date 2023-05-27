@@ -2,7 +2,7 @@ package src
 
 import (
 	"fmt"
-	"github.com/davy/kv_db/src/persistenceSvc"
+	"github.com/kadai0308/cleantone/src/persistenceSvc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"io/ioutil"

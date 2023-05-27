@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/davy/kv_db/src"
-	"github.com/davy/kv_db/src/persistenceSvc"
+	"github.com/kadai0308/cleantone/src"
+	"github.com/kadai0308/cleantone/src/persistenceSvc"
 	"math/rand"
 	"os"
 	"testing"

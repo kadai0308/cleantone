@@ -1,6 +1,6 @@
 package src
 
-import "github.com/davy/kv_db/src/persistenceSvc"
+import "github.com/kadai0308/cleantone/src/persistenceSvc"
 
 type DBConfig struct {
 	RotateThreshold int
