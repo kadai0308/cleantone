@@ -31,37 +31,17 @@ func BenchmarkSetSingleKey(b *testing.B) {
 	for j := 0; j < b.N; j++ {
 		DB.Set(KEY, VALUE)
 	}
-	// 创建性能图表的数据点
-	//var xvalue []float64
-	//var yvalue []float64
-	//
-	//for i := 1; i <= 10; i++ {
-	//	start := time.Now()
-	//
-	//	// 执行基准测试循环
-	//	for j := 0; j < b.N; j++ {
-	//		DB.Set("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-	//	}
-	//
-	//	elapsed := time.Since(start)
-	//	// 将结果添加到数据点
-	//	xvalue = append(xvalue, float64(i))
-	//	yvalue = append(yvalue, float64(elapsed.Milliseconds()))
-	//}
-
-	//fmt.Println(xvalue)
-	//fmt.Println(yvalue)
 
 }
 
-//func BenchmarkReadKey(b *testing.B) {
-//	// 设置随机数种子
-//	rand.Seed(time.Now().UnixNano())
-//
-//	for j := 0; j < b.N; j++ {
-//		DB.Get("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-//	}
-//}
+func BenchmarkReadKey(b *testing.B) {
+	// 设置随机数种子
+	rand.Seed(time.Now().UnixNano())
+
+	for j := 0; j < b.N; j++ {
+		DB.Get("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+	}
+}
 
 func BenchmarkWriteCSV(b *testing.B) {
 	rand.Seed(time.Now().UnixNano())
@@ -73,19 +53,6 @@ func BenchmarkWriteCSV(b *testing.B) {
 
 func main() {
 
-	testing.Benchmark(BenchmarkWriteCSV)
-	//testing.Benchmark(BenchmarkReadKey)
-	//defer DB.PersistenceSvc.Flush()
-	//
-	//for i := 0; i < 1000000; i++ {
-	//	//uuid1 := uuid.New()
-	//	uuid2 := uuid.New()
-	//	DB.Set("a", uuid2.String())
-	//	//fmt.Println(i, uuid2)
-	//}
-	//
-	//fmt.Println(DB.PersistenceSvc.Prune(DB.Index))
-
-	return
+	testing.Benchmark(BenchmarkSetSingleKey)
 
 }

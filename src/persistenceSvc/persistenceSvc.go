@@ -16,6 +16,7 @@ type PersistenceSvc interface {
 	Prune(index map[string]string) error
 	RotateFile() error
 	Flush() error
+	Close() error
 }
 
 func NewPersistenceSvc(format DataFormat, dataPath string, rotateThreshold int) (PersistenceSvc, error) {

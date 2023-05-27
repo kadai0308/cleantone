@@ -15,7 +15,6 @@ import (
 type CsvImpl struct {
 	BaseImpl
 	Writer *bufio.Writer
-	//StringBuilder strings.Builder
 }
 
 func NewCsvImpl(format DataFormat, dataPath string, rotateThreshold int) (*CsvImpl, error) {
@@ -150,6 +149,6 @@ func (c *CsvImpl) Prune(index map[string]string) error {
 	return nil
 }
 
-func (c *CsvImpl) Close() {
-	c.File.Close()
+func (c *CsvImpl) Close() error {
+	return c.File.Close()
 }

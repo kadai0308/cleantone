@@ -49,3 +49,14 @@ func (db *DB) Get(key string) (string, error) {
 
 	return value, nil
 }
+
+func (db *DB) Close() error {
+	if err := db.PersistenceSvc.Flush(); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := db.PersistenceSvc.Close(); err != nil {
+		log.Fatal(err)
+	}
+	return nil
+}
