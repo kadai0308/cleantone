@@ -2,15 +2,13 @@ package cleantone
 
 import (
 	"fmt"
-	"github.com/kadai0308/cleantone/PersistenceSvc"
 	"math/rand"
-	"os"
 	"testing"
 	"time"
 )
 
 var config = DBConfig{
-	DataFormat:      PersistenceSvc.DataFormat.CSV,
+	DataFormat:      DataFormat.CSV,
 	DataPath:        "/Users/davy/davy/go_playground/kv_db/data",
 	RotateThreshold: 100 * FileSize.MB,
 }
@@ -18,7 +16,8 @@ var config = DBConfig{
 var TestDB = NewDB(config)
 
 var INDEX = map[string]string{}
-var CsvFile, _ = os.OpenFile("./test.csv", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+
+//var CsvFile, _ = os.OpenFile("./test.csv", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 
 var KEY = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 var VALUE = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"

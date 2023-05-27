@@ -3,17 +3,16 @@ package cleantone
 import (
 	"errors"
 	"fmt"
-	"github.com/kadai0308/cleantone/PersistenceSvc"
 	"log"
 )
 
 type DB struct {
 	Index          map[string]string
-	PersistenceSvc PersistenceSvc.PersistenceSvc
+	PersistenceSvc PersistenceSvc
 }
 
 func NewDB(config DBConfig) *DB {
-	persistenceSvc, err := PersistenceSvc.NewPersistenceSvc(config.DataFormat, config.DataPath, config.RotateThreshold)
+	persistenceSvc, err := NewPersistenceSvc(config.DataFormat, config.DataPath, config.RotateThreshold)
 	if err != nil {
 		log.Fatal(err)
 	}

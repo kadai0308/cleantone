@@ -1,4 +1,4 @@
-package PersistenceSvc
+package cleantone
 
 type DataFormatImpl string
 

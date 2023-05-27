@@ -2,7 +2,6 @@ package cleantone
 
 import (
 	"fmt"
-	"github.com/kadai0308/cleantone/PersistenceSvc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"io/ioutil"
@@ -53,7 +52,7 @@ func (suite *DBTestSuite) BeforeTest(_, _ string) {
 	dbConfig := DBConfig{
 		RotateThreshold: 1 * FileSize.KB,
 		DataPath:        dataPath,
-		DataFormat:      PersistenceSvc.DataFormat.CSV,
+		DataFormat:      DataFormat.CSV,
 	}
 	suite.DBConfig = &dbConfig
 	suite.DBSvc = NewDB(dbConfig)
