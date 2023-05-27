@@ -12,13 +12,13 @@ import (
 	"strings"
 )
 
-type CsvImpl struct {
-	BaseImpl
+type csvImpl struct {
+	baseImpl
 	Writer *bufio.Writer
 }
 
-func NewCsvImpl(format DataFormatImpl, dataPath string, rotateThreshold int) (*CsvImpl, error) {
-	file, fileID, err := InitDataFile(dataPath, string(format))
+func newCsvImpl(format DataFormatImpl, dataPath string, rotateThreshold int) (*csvImpl, error) {
+	file, fileID, err := initDataFile(dataPath, string(format))
 	if err != nil {
 		return nil, err
 	}
@@ -29,8 +29,8 @@ func NewCsvImpl(format DataFormatImpl, dataPath string, rotateThreshold int) (*C
 	}
 
 	write := bufio.NewWriterSize(file, 2*rotateThreshold)
-	return &CsvImpl{
-		BaseImpl{
+	return &csvImpl{
+		baseImpl{
 			File:            file,
 			FileID:          fileID,
 			FileSize:        fileInfo.Size(),
@@ -42,7 +42,7 @@ func NewCsvImpl(format DataFormatImpl, dataPath string, rotateThreshold int) (*C
 	}, nil
 }
 
-func (c *CsvImpl) GenerateCsvRow(key string, value string) string {
+func (c *csvImpl) generateCsvRow(key string, value string) string {
 	StringBuilder := strings.Builder{}
 	StringBuilder.WriteString(key)
 	StringBuilder.WriteString(",")
@@ -51,8 +51,8 @@ func (c *CsvImpl) GenerateCsvRow(key string, value string) string {
 	return StringBuilder.String()
 }
 
-func (c *CsvImpl) WriteData(key string, value string) error {
-	data := c.GenerateCsvRow(key, value)
+func (c *csvImpl) WriteData(key string, value string) error {
+	data := c.generateCsvRow(key, value)
 	c.Writer.WriteString(data)
 	c.FileSize = c.FileSize + int64(len(data))
 	err := c.RotateFile()
@@ -62,7 +62,7 @@ func (c *CsvImpl) WriteData(key string, value string) error {
 	return nil
 }
 
-func (c *CsvImpl) BuildIndex() (map[string]string, error) {
+func (c *csvImpl) BuildIndex() (map[string]string, error) {
 	index := map[string]string{}
 	files, _ := ioutil.ReadDir(c.DataPath)
 	for _, fileInfo := range files {
@@ -87,14 +87,14 @@ func (c *CsvImpl) BuildIndex() (map[string]string, error) {
 	return index, nil
 }
 
-func (c *CsvImpl) RotateFile() error {
+func (c *csvImpl) RotateFile() error {
 	if c.FileSize >= int64(c.RotateThreshold) {
 		err := c.Writer.Flush()
 		if err != nil {
 			return err
 		}
 		c.FileID = c.FileID + 1
-		newFile := c.GenerateDataFileName(c.FileID)
+		newFile := c.generateDataFileName(c.FileID)
 		newFilePath := filepath.Join(c.DataPath, newFile)
 		file, err := os.OpenFile(newFilePath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
 		if err != nil {
@@ -108,17 +108,17 @@ func (c *CsvImpl) RotateFile() error {
 	return nil
 }
 
-func (c *CsvImpl) Flush() error {
+func (c *csvImpl) Flush() error {
 	return c.Writer.Flush()
 }
 
-func (c *CsvImpl) GetFileID(fileName string) int {
+func (c *csvImpl) GetFileID(fileName string) int {
 	fileIDStr := strings.Split(strings.Split(fileName, "_")[1], ".")[0]
 	fileID, _ := strconv.Atoi(fileIDStr)
 	return fileID
 }
 
-func (c *CsvImpl) Prune(index map[string]string) error {
+func (c *csvImpl) Prune(index map[string]string) error {
 	files, _ := ioutil.ReadDir(c.DataPath)
 	for _, fileInfo := range files {
 		fileID := c.GetFileID(fileInfo.Name())
@@ -131,7 +131,7 @@ func (c *CsvImpl) Prune(index map[string]string) error {
 
 	newDataPath := filepath.Join(c.DataPath, "new_data")
 	os.Mkdir(newDataPath, 0755)
-	csvPersistSvc, err := NewCsvImpl(DataFormat.CSV, newDataPath, c.RotateThreshold)
+	csvPersistSvc, err := newCsvImpl(DataFormat.CSV, newDataPath, c.RotateThreshold)
 	if err != nil {
 		return err
 	}
@@ -149,6 +149,6 @@ func (c *CsvImpl) Prune(index map[string]string) error {
 	return nil
 }
 
-func (c *CsvImpl) Close() error {
+func (c *csvImpl) Close() error {
 	return c.File.Close()
 }

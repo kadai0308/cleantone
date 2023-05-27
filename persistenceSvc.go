@@ -19,9 +19,9 @@ type PersistenceSvc interface {
 	Close() error
 }
 
-func NewPersistenceSvc(format DataFormatImpl, dataPath string, rotateThreshold int) (PersistenceSvc, error) {
+func newPersistenceSvc(format DataFormatImpl, dataPath string, rotateThreshold int) (PersistenceSvc, error) {
 	if format == DataFormat.CSV {
-		impl, err := NewCsvImpl(format, dataPath, rotateThreshold)
+		impl, err := newCsvImpl(format, dataPath, rotateThreshold)
 		if err != nil {
 			return nil, err
 		}
@@ -34,7 +34,7 @@ func NewPersistenceSvc(format DataFormatImpl, dataPath string, rotateThreshold i
 	return nil, errors.New(errMsg)
 }
 
-type BaseImpl struct {
+type baseImpl struct {
 	File            *os.File
 	FileID          int
 	FileSize        int64
@@ -43,7 +43,7 @@ type BaseImpl struct {
 	RotateThreshold int
 }
 
-func InitDataFile(dataPath string, extension string) (*os.File, int, error) {
+func initDataFile(dataPath string, extension string) (*os.File, int, error) {
 	files, _ := ioutil.ReadDir(dataPath)
 	fileID := 0
 	var currDbFile *os.File
@@ -63,7 +63,7 @@ func InitDataFile(dataPath string, extension string) (*os.File, int, error) {
 	return currDbFile, fileID, nil
 }
 
-func (c *BaseImpl) GenerateDataFileName(id int) string {
+func (c *baseImpl) generateDataFileName(id int) string {
 	name := fmt.Sprintf("data_%d.%s", id, c.Format)
 	return name
 }

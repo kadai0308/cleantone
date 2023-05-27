@@ -3,6 +3,7 @@ package cleantone
 import (
 	"fmt"
 	"math/rand"
+	"os"
 	"testing"
 	"time"
 )
@@ -17,7 +18,7 @@ var TestDB = NewDB(config)
 
 var INDEX = map[string]string{}
 
-//var CsvFile, _ = os.OpenFile("./test.csv", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+var CsvFile *os.File
 
 var KEY = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 var VALUE = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
@@ -49,8 +50,8 @@ func BenchmarkWriteCSV(b *testing.B) {
 	}
 }
 
-//func main() {
-//
-//	testing.Benchmark(BenchmarkSetSingleKey)
-//
-//}
+func main() {
+	CsvFile, _ = os.OpenFile("./test.csv", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	testing.Benchmark(BenchmarkSetSingleKey)
+
+}

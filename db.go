@@ -12,7 +12,7 @@ type DB struct {
 }
 
 func NewDB(config DBConfig) *DB {
-	persistenceSvc, err := NewPersistenceSvc(config.DataFormat, config.DataPath, config.RotateThreshold)
+	persistenceSvc, err := newPersistenceSvc(config.DataFormat, config.DataPath, config.RotateThreshold)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,13 +27,13 @@ func NewDB(config DBConfig) *DB {
 	return db
 }
 
-func (db *DB) Persist(key string, value string) error {
+func (db *DB) persist(key string, value string) error {
 	return db.PersistenceSvc.WriteData(key, value)
 }
 
 func (db *DB) Set(key string, value string) {
 	db.Index[key] = value
-	if err := db.Persist(key, value); err != nil {
+	if err := db.persist(key, value); err != nil {
 		log.Fatal(err)
 	}
 }
