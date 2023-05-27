@@ -25,7 +25,34 @@ Read will be the same because both are from memory (use map to do index)
 
 ### Installation
 
+`go get github.com/kadai0308/cleantone`
+
 ### Example
+
+```golang
+    package main
+    
+    import (
+        "github.com/kadai0308/cleantone"
+        "log"
+    )
+    
+    func main() {
+		dataPath := "FOLDER_PATH_YOU_WANT"
+		eachDataFileSize := 10 * cleantone.FileSize.MB
+		dataFileFormat := cleantone.DataFormat.CSV
+        config := cleantone.DBConfig{
+            RotateThreshold: eachDataFileSize,
+            DataPath:        dataPath,
+            DataFormat:      dataFileFormat,
+        }
+        DB := cleantone.NewDB(config)
+        _, err := DB.Get("haha")
+        if err != nil {
+            log.Fatal(err)
+        }
+    }
+```
 
 ## License
 
