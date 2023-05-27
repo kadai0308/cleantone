@@ -38,15 +38,19 @@ Read will be the same because both are from memory (use map to do index)
     )
     
     func main() {
-		dataPath := "FOLDER_PATH_YOU_WANT"
-		eachDataFileSize := 10 * cleantone.FileSize.MB
-		dataFileFormat := cleantone.DataFormat.CSV
+	dataPath := "FOLDER_PATH_YOU_WANT"
+	eachDataFileSize := 10 * cleantone.FileSize.MB
+	dataFileFormat := cleantone.DataFormat.CSV
         config := cleantone.DBConfig{
             RotateThreshold: eachDataFileSize,
             DataPath:        dataPath,
             DataFormat:      dataFileFormat,
         }
         DB := cleantone.NewDB(config)
+
+	// In order to persistence the data in memory,
+	// remember to call DB.Close() before func return
+	defer DB.Close()
         _, err := DB.Get("haha")
         if err != nil {
             log.Fatal(err)
